@@ -1,15 +1,18 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import CharacterList from './components/CharacterList';
+'use client'
+
+import App from './components/App';
+
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+
+const client = new ApolloClient({
+  uri: 'https://rickandmortyapi.com/graphql',
+  cache: new InMemoryCache()
+})
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <CharacterList />
-      </main>
-      <footer className={styles.footer}>
-      </footer>
-    </div>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   );
 }

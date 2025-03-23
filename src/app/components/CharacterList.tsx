@@ -1,54 +1,18 @@
-'use client'
-
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-
-
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client'
-
-const client = new ApolloClient({
-  uri: 'https://rickandmortyapi.com/graphql',
-  cache: new InMemoryCache()
-})
+import React from 'react'
+import { useQuery } from '@apollo/client'
+import { GET_CHARACTERS } from '../lib/graphql/queries'
 
 const CharacterList = () => {
-  const [ characters, setCharacters ] = useState<Character[]>([])
+  const { loading, error, data } = useQuery<CharacterData>(GET_CHARACTERS)
 
-  useEffect(() => {
-    async function getResults() {
-      const result = await client.query({
-        query: gql`
-          query {
-            characters {
-              results {
-                id
-                name
-                image
-                species
-                status
-                location {
-                  name
-                }
-              }
-            }
-          }
-        `
-      })
-
-      const characters = result.data.characters.results
-
-      setCharacters(characters)
-
-      console.log('result =>', result)
-    }
-
-    getResults()
-    
-  }, [])
+  if (loading) {
+    return <div>loading...</div>
+  }
 
   return (
     <ul>
-      { characters.map(character => (
+      { data?.characters.results.map(character => (
         <li style={{ display: 'flex', gap: '20px' }} key={character.id}>
           <Image 
             src={character.image}

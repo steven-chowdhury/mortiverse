@@ -8,3 +8,9 @@ interface Character {
   image: string
   status: 'Alive' | 'Dead' | 'unknown'
 }
+
+interface CharacterData {
+  characters: {
+    results: Character[]
+  }
+}
