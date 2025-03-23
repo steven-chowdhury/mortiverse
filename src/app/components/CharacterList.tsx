@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client'
 import { GET_CHARACTERS } from '../lib/graphql/queries'
 
 const CharacterList = () => {
-  const { loading, error, data } = useQuery<CharacterData>(GET_CHARACTERS)
+  const { loading, error, data } = useQuery<CharacterResponse>(GET_CHARACTERS)
 
   if (loading) {
     return <div>loading...</div>

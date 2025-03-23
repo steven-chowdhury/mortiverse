@@ -9,7 +9,7 @@ interface Character {
   status: 'Alive' | 'Dead' | 'unknown'
 }
 
-interface CharacterData {
+interface CharacterResponse {
   characters: {
     results: Character[]
   }
